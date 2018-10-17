@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage x:Class="Rescue.View.EntryContactView"
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:custom="clr-namespace:Rescue.Extras"
+                 xmlns:local="clr-namespace:Rescue">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation DurationIn="400"
+                                   DurationOut="300"
+                                   EasingIn="SinOut"
+                                   EasingOut="SinIn"
+                                   HasBackgroundAnimation="True"
+                                   PositionIn="Center"
+                                   PositionOut="Center"
+                                   ScaleIn="1.2"
+                                   ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <Frame CornerRadius="10" HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="contactId" TextColor="Transparent" Grid.Row="0" Text="{Binding ContactId, Mode=TwoWay}"/>
+            <custom:CustomEntry
+                            x:Name="contactName"
+                            Grid.Row ="0" 
+            Grid.ColumnSpan="2"
+                            CornerRadius="10"
+                            IsCurvedCornersEnabled="True"
+                            BorderColor="#34495e"
+                            HorizontalTextAlignment="Center"
+                            FontSize="17"
+                            Placeholder="Contact Name"
+                            PlaceholderColor="Gray"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                          Text="{Binding ContactName, Mode=TwoWay}"
+            HorizontalOptions="FillAndExpand"/>
+
+            <custom:CustomEntry
+                            x:Name="contactNumber"
+                            Grid.Row ="1" 
+                   Grid.ColumnSpan="2"
+                            CornerRadius="10"
+                            IsCurvedCornersEnabled="True"
+                            BorderColor="#34495e"
+                            HorizontalTextAlignment="Center"
+                            FontSize="17"
+                            Placeholder="Contact Number"
+                            PlaceholderColor="Gray"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                Keyboard="Numeric"
+                MaxLength="11"
+                         Text="{Binding ContactNumber, Mode=TwoWay}"
+               HorizontalOptions="FillAndExpand"/>
+
+            <!--<Entry x:Name="contactName" Grid.Row="2" Grid.Column="1"
+               Text="{Binding ContactName}" FontSize="15" TextColor="Black"
+               HorizontalOptions="Fill" VerticalOptions="Center"/>-->
+
+            <Button Grid.Row="2" IsVisible="false"
+                x:Name="addBtn" BackgroundColor="#2ecc71" 
+                Text="ADD" Font="20" TextColor="White"   FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Command="{Binding Add}"
+                    CommandParameter="Add"
+                CornerRadius="10"/>
+            <Button Grid.Row="2" IsVisible="false"
+                x:Name="updateBtn" BackgroundColor="#2ecc71" 
+                Text="UPDATE" Font="20" TextColor="White"   FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+               Command="{Binding Add}"
+                    CommandParameter="Update"
+                CornerRadius="10"/>
+            <Button Grid.Row="2" Grid.Column="1"
+                x:Name="cancelBtn" BackgroundColor="#7f8c8d"
+                Text="CANCEL" Font="20" TextColor="White"    FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Clicked="OnCancel"
+                CornerRadius="10"
+              />
+        </Grid>
+    </Frame>
+    
+</pages:PopupPage>

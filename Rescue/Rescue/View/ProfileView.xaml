@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Rescue.View.ProfileView"
+             Title="Identification"
+             Icon="hamburger.png"
+             BackgroundColor="#34495e">
+    <Grid Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="0">
+            <StackLayout Margin="0,0,0,10">
+                <Image Margin="0,0,0,20"
+                      Source="profile.png" 
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name="name" Font="20" FontAttributes="Bold" TextColor="White"  HorizontalTextAlignment="Center"
+                        HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label  Margin="0,0,0,10"
+                        Text="Full Name" Font="15" TextColor="White" 
+                        HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name="address" Font="20" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"
+                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label  Margin="0,0,0,10"
+                         Text="Address" Font="15" TextColor="White" 
+                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name="age" Font="20" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"
+                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label  Margin="0,0,0,10"
+                         Text="Age" Font="15" TextColor="White" 
+                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name="blood" Font="20" FontAttributes="Bold" TextColor="White"  HorizontalTextAlignment="Center"
+                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Margin="0,0,0,10"
+                        Text="Blood Group" Font="15" TextColor="White" 
+                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name="other" Font="20" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"
+                         HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label  Margin="0,0,0,10"
+                        Text="Other Information" Font="15" TextColor="White" 
+                        HorizontalOptions="Center" VerticalOptions="Center"/>
+            </StackLayout>
+        </ScrollView>
+        <Button x:Name="editBtn" Grid.Row="1"
+                Text="EDIT PROFILE" FontSize="20" FontAttributes="Bold" TextColor="White"
+                BackgroundColor="#2ecc71"
+                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                Command="{Binding EditProfile}"/>
+    </Grid>
+</ContentPage>

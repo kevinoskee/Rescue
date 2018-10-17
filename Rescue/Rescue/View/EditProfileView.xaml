@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:system="clr-namespace:System;assembly=mscorlib"
+             x:Class="Rescue.View.EditProfileView"
+             BackgroundColor="#2c3e50">
+    <Grid Padding="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollView Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid RowSpacing="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="0.7*" />
+                </Grid.RowDefinitions>
+                
+                
+                <Image Margin="0,0,0,30" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                      Source="profile.png" 
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+                <!--<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                       Text="Change picture" TextColor="White" Font="20"
+                       BackgroundColor="#7f8c8d" Opacity="60" 
+                       HorizontalOptions="Center" VerticalOptions="Center"/>-->
+
+                <Label  Grid.Row="1" Grid.Column="0" 
+                        Text="First Name" Font="20" TextColor="White" 
+                        HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="2" Grid.Column="0" 
+                        Text="Middle Name" Font="20" TextColor="White" 
+                     HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="3" Grid.Column="0" 
+                        Text="Last Name" Font="20" TextColor="White" 
+                     HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="4" Grid.Column="0" 
+                        Text="House Number" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="5" Grid.Column="0" 
+                        Text="Street" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="6" Grid.Column="0" 
+                        Text="Barangay" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="7" Grid.Column="0"
+                        Text="Town/Municipality" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="8" Grid.Column="0" 
+                        Text="City/Province" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="9" Grid.Column="0" 
+                        Text="Birthdate" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="10" Grid.Column="0" 
+                        Text="Blood Group" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label  Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2"
+                        Text="Other Information" Font="20" TextColor="White" 
+                       HorizontalOptions="Start" VerticalOptions="Center"/>
+
+                <Entry x:Name="firstName"
+                        Grid.Row="1" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding FirstName}" FontSize="20" TextColor="White"/>
+              <Entry x:Name="middleName"
+                       Grid.Row="2" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding MiddleName}" FontSize="20" TextColor="White"/>
+                <Label  Grid.Row="2" Grid.Column="1"
+                        Text="Optional" Font="10" TextColor="White" 
+                       HorizontalOptions="End" VerticalOptions="Start"/>
+                <Entry x:Name="lastName"
+                       Grid.Row="3" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding LastName}" FontSize="20" TextColor="White"/>
+                <Entry x:Name="houseNo"
+                       Grid.Row="4" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding HouseNumber}" FontSize="20" TextColor="White"/>
+                <Entry x:Name="street"
+                       Grid.Row="5" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding Street}" FontSize="20" TextColor="White"/>
+               <Entry x:Name="barangay"
+                       Grid.Row="6" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding Barangay}" FontSize="20" TextColor="White"/>
+                <Entry x:Name="town"
+                       Grid.Row="7" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding Town}" FontSize="20" TextColor="White"/>
+                <Entry x:Name="city"
+                       Grid.Row="8" Grid.Column="1" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding City}" FontSize="20" TextColor="White"/>
+                <DatePicker x:Name="birthdate"
+                       Grid.Row="9" Grid.Column="1" 
+                       Format="MMMM dd, yyyy"  MaximumDate="{Binding BirthDate}"  Date="{Binding BirthDate}" 
+                       BackgroundColor="#4A6075"
+                   TextColor="White"/>
+                <Picker x:Name="bloodGroup" Title="Choose blood group"
+                        Grid.Row="10" Grid.Column="1"
+                        SelectedItem="{Binding BloodGroup}" TextColor="White"
+                        BackgroundColor="#4A6075">
+                    <Picker.Items>
+                        <x:String>O-</x:String>
+                        <x:String>O+</x:String>
+                        <x:String>A-</x:String>
+                        <x:String>A+</x:String>
+                        <x:String>B-</x:String>
+                        <x:String>B+</x:String>
+                        <x:String>AB-</x:String>
+                        <x:String>AB+</x:String>
+                    </Picker.Items>
+                </Picker>
+                <Editor x:Name="otherInfo"
+                       Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" 
+                       BackgroundColor="#4A6075"
+                       Text="{Binding OtherInfo}" FontSize="20" TextColor="White"/>
+                <Label  Grid.Row="12" Grid.Column="0" Grid.ColumnSpan="2" 
+                        Text="Optional" Font="10" TextColor="White" 
+                       HorizontalOptions="End" VerticalOptions="Start"/>
+            </Grid>
+        </ScrollView>
+        <Button x:Name="createBtn" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="CREATE PROFILE" FontSize="20" FontAttributes="Bold" TextColor="White"
+                BackgroundColor="#2ecc71"
+                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                Command="{Binding Create}"/>
+        <Button x:Name="saveBtn" Grid.Row="1" Grid.Column="0"
+                Text="SAVE" FontSize="20" FontAttributes="Bold" TextColor="White"
+                BackgroundColor="#2ecc71"
+                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                 Command="{Binding Save}"/>
+        <Button x:Name="discardBtn" Grid.Row="1" Grid.Column="1"
+                Text="DISCARD" FontSize="20" FontAttributes="Bold" TextColor="White"
+                BackgroundColor="#7f8c8d"
+                HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+    </Grid>
+</ContentPage>

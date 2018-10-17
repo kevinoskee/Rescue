@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Rescue"
+             x:Class="Rescue.View.NewContact"
+               xmlns:custom="clr-namespace:Rescue.Extras">
+
+    <Frame CornerRadius="5" BackgroundColor="#B3486684" Padding="10" >
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Label  x:Name="contactId"  x:FieldModifier="Public" Grid.Column="0"
+               TextColor="Transparent"/>
+            <Frame Padding="0" Grid.Column="0" BackgroundColor ="#2980b9"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="person.png" BackgroundColor="#3498db" Grid.Column="0" VerticalOptions="Fill" HorizontalOptions="Fill" HeightRequest="20" Margin="0"/>
+                    <!--<Image Source="person.png" BackgroundColor="#0984e3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"/>-->
+                    <Label x:Name="contactName" x:FieldModifier="Public" Grid.Column="1" Margin="2,10,2,10"
+               FontSize="15" TextColor="White" FontAttributes="Bold" LineBreakMode="TailTruncation"
+               HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+            <Frame Padding="0" Grid.Column="1" BackgroundColor ="#3498db"  HorizontalOptions="FillAndExpand" VerticalOptions="Center" CornerRadius="10">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.2*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="phone.png" BackgroundColor="#2980b9" Grid.Column="0" VerticalOptions="Fill" HorizontalOptions="Fill" HeightRequest="20" Margin="0"/>
+                    <!--<Image Source="person.png" BackgroundColor="#0984e3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"/>-->
+                    <Label x:Name="contactNumber" x:FieldModifier="Public" Grid.Column="1" Margin="2,10,2,10"
+               FontSize="15" TextColor="White" FontAttributes="Bold" LineBreakMode="TailTruncation"
+               HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+           
+        </Grid>
+    </Frame>
+
+    <Frame.GestureRecognizers>
+        <SwipeGestureRecognizer 
+                                Swiped="OnSwiped"
+                                Direction="Left"/>
+        <TapGestureRecognizer 
+                                Tapped="OnTapped"
+                                 NumberOfTapsRequired="2"/>
+    </Frame.GestureRecognizers>
+    
+</ContentView>

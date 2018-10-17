@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Rescue.View.HomeView"
+              xmlns:cs="clr-namespace:Rescue.Extras"
+             Title="Rescue"
+             BackgroundColor="#2c3e50">
+
+        <Grid RowSpacing="10" ColumnSpacing="10" Padding="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Fill" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="7*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+           
+            <Frame x:Name="modeFrame" Padding="5" Grid.Column="0" BackgroundColor ="#e74c3c"  HorizontalOptions="Fill" VerticalOptions="Center" Margin="100,0,0,0" CornerRadius="5">
+                <Label x:Name="emergencyMode" x:FieldModifier="Public" Text="{Binding EmergencyMode, Mode=TwoWay}" 
+               FontSize="15" TextColor="White" FontAttributes="Bold"
+               HorizontalOptions="Center" VerticalOptions="Center" />
+            </Frame>
+            <Switch x:Name="switchBtn" IsToggled="True" Toggled="OnToggled" Grid.Column="1"/>
+        </Grid>
+       
+        <Image x:Name="Police" Grid.Row="1" Grid.Column="0" 
+               HorizontalOptions="Center" VerticalOptions="Center">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Police"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <Image x:Name="Medical"  Grid.Row="1" Grid.Column="1"  
+               HorizontalOptions="Center" VerticalOptions="Center">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Medical"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <Image x:Name="Fire" Grid.Row="3" Grid.Column="0" 
+               HorizontalOptions="Center" VerticalOptions="Center">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Fire"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <Image x:Name="Personal" Grid.Row="3" Grid.Column="1" 
+               HorizontalOptions="Center" VerticalOptions="Center">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Personal"/>
+            </Image.GestureRecognizers>
+        </Image>
+
+        <Label x:Name="PoliceText" Grid.Row="2" Grid.Column="0" 
+               Text="Police" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Label x:Name="MedicalText" Grid.Row="2" Grid.Column="1" 
+               Text="Medical" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Label x:Name="FireText" Grid.Row="4" Grid.Column="0" 
+               Text="Fire" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+        <Label x:Name="PersonalText" Grid.Row="4" Grid.Column="1" 
+               Text="Personal" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+
+
+
+
+        <!--<Image x:Name="Police" Grid.Row="0" Grid.Column="0" 
+               HorizontalOptions="Center" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Police"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image x:Name="Medical"  Grid.Row="0" Grid.Column="1"  
+               HorizontalOptions="Center" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Medical"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image x:Name="Fire" Grid.Row="2" Grid.Column="0" 
+               HorizontalOptions="Center" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Fire"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image x:Name="Personal" Grid.Row="2" Grid.Column="1" 
+               HorizontalOptions="Center" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer
+                    Command="{Binding EmergencyTap}"
+                    CommandParameter="Personal"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label x:Name="PoliceText" Grid.Row="1" Grid.Column="0" 
+               Text="Police" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label x:Name="MedicalText" Grid.Row="1" Grid.Column="1" 
+               Text="Medical" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label x:Name="FireText" Grid.Row="3" Grid.Column="0" 
+               Text="Fire" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label x:Name="PersonalText" Grid.Row="3" Grid.Column="1" 
+               Text="Personal" Font="15" FontAttributes="Bold" TextColor="White" 
+               HorizontalOptions="Center" VerticalOptions="Center"/>-->
+
+            <!--<Button x:Name="configBtn"
+                 Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
+                Text="EDIT CONTACTS" FontSize="20" FontAttributes="Bold" TextColor="White"
+                BackgroundColor="#2ecc71"
+                 HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+               Command="{Binding Edit}" CornerRadius="10"/>
+            <Button x:Name="doneBtn" IsVisible="False"
+                 Grid.Row="4" Grid.Column="0"
+                Text="DONE" FontSize="20" FontAttributes="Bold" TextColor="White"
+                BackgroundColor="#2ecc71"
+                 HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                 Command="{Binding Done}" CornerRadius="10"/>
+            <Button x:Name="returnBtn" IsVisible="False"
+                 Grid.Row="4" Grid.Column="1"
+                Text="RETURN" FontSize="20" FontAttributes="Bold" TextColor="White"
+                BackgroundColor="#7f8c8d"
+                 HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                Command="{Binding Return}" CornerRadius="10"/>-->
+        </Grid>
+
+</ContentPage>

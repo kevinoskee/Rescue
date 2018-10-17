@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage x:Class="Rescue.View.EntryMessageView"
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:custom="clr-namespace:Rescue.Extras">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation DurationIn="400"
+                                   DurationOut="300"
+                                   EasingIn="SinOut"
+                                   EasingOut="SinIn"
+                                   HasBackgroundAnimation="True"
+                                   PositionIn="Center"
+                                   PositionOut="Center"
+                                   ScaleIn="1.2"
+                                   ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <Frame CornerRadius="10" HorizontalOptions="Center" VerticalOptions="Center">
+        <Grid HorizontalOptions="Center" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <!--<RowDefinition Height="Auto"/>-->
+            </Grid.RowDefinitions>
+            <Label x:Name="emergencyName" TextColor="Transparent" Grid.Row="0" Text="{Binding EmergencyName, Mode=TwoWay}"/>
+            <custom:CustomEditor    x:Name="messageTemplate" Text="{Binding MessageTemplate, Mode=TwoWay}"  FontSize="17" Placeholder="Message Template"      Grid.Row ="0" 
+            Grid.ColumnSpan="2"  HorizontalOptions="Fill"
+            VerticalOptions="Fill" HeightRequest="100"    TextColor="Black"
+                           FontAttributes="Bold"/>
+            <!--<custom:CustomEntry
+                            x:Name="messageTemplate"
+                            Grid.Row ="0" 
+            Grid.ColumnSpan="2"
+                            CornerRadius="10"
+                            IsCurvedCornersEnabled="True"
+                            BorderColor="#34495e"
+                            HorizontalTextAlignment="Start"
+                            FontSize="17"
+                            Placeholder="Message Template"
+                            PlaceholderColor="Gray"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                          Text="{Binding MessageTemplate, Mode=TwoWay}"
+               
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="FillAndExpand"/>-->
+
+      
+
+            <!--<Entry x:Name="contactName" Grid.Row="2" Grid.Column="1"
+               Text="{Binding ContactName}" FontSize="15" TextColor="Black"
+               HorizontalOptions="Fill" VerticalOptions="Center"/>-->
+
+            <Button Grid.Row="1" 
+                x:Name="saveBtn" BackgroundColor="#2ecc71" 
+                Text="SAVE" Font="20" TextColor="White"   FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Command="{Binding Save}"
+                CornerRadius="10"/>
+            <Button Grid.Row="1" Grid.Column="1"
+                x:Name="cancelBtn" BackgroundColor="#7f8c8d"
+                Text="CANCEL" Font="20" TextColor="White"    FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Clicked="OnCancel"
+                CornerRadius="10"
+              />
+        </Grid>
+    </Frame>
+    
+</pages:PopupPage>
