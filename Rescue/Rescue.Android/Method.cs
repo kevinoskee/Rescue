@@ -114,21 +114,21 @@ namespace Rescue.Droid
             {
                 string _name = "";
                 string _address = "";
-                int _age;
+                int _age = 0;
                 string _bloodgroup = "";
                 string _otherinfo = "";
                 string message1 = "Emergency Message:\n\n";
                 string message2 = "Other information:\n\n";
 
-                await Location();
+                //await Location();
 
-                ProfileDatabase profileDB = new ProfileDatabase(dbPath);
-                var profile = await profileDB.GetProfileAsync();
-                _name = profile.FirstName + " " + ((profile.MiddleName != null) ? profile.MiddleName.ElementAt(0).ToString() + ". " : "") + profile.LastName;
-                _address = profile.HouseNumber + " " + profile.Street + " St. Brgy. " + profile.Barangay + " " + profile.Town + ", " + profile.City;
-                _age = ((DateTime.Now.DayOfYear < profile.Birthdate.DayOfYear) ? DateTime.Now.Year - profile.Birthdate.Year - 1 : DateTime.Now.Year - profile.Birthdate.Year);
-                _bloodgroup = profile.BloodGroup;
-                _otherinfo = (profile.OtherInfo ?? "");
+                //ProfileDatabase profileDB = new ProfileDatabase(dbPath);
+                //var profile = await profileDB.GetProfileAsync();
+                //_name = profile.FirstName + " " + ((profile.MiddleName != null) ? profile.MiddleName.ElementAt(0).ToString() + ". " : "") + profile.LastName;
+                //_address = profile.HouseNumber + " " + profile.Street + " St. Brgy. " + profile.Barangay + " " + profile.Town + ", " + profile.City;
+                //_age = ((DateTime.Now.DayOfYear < profile.Birthdate.DayOfYear) ? DateTime.Now.Year - profile.Birthdate.Year - 1 : DateTime.Now.Year - profile.Birthdate.Year);
+                //_bloodgroup = profile.BloodGroup;
+                //_otherinfo = (profile.OtherInfo ?? "");
 
                 MessageDatabase messageDB = new MessageDatabase(dbPath);
                 var messageTemp = await messageDB.GetMessageAsync(emergency);
@@ -141,7 +141,7 @@ namespace Rescue.Droid
 
                 StringBuilder str2 = new StringBuilder();
                 str2.Append("Address: " + _address);
-                str2.Append("\nAge: " + _age);
+                str2.Append("\nAge: " + _age.ToString());
                 str2.Append("\nBlood Group: " + _bloodgroup);
                 if (_otherinfo != "")
                     str2.Append("\nOther Information: " + _otherinfo);
@@ -161,7 +161,7 @@ namespace Rescue.Droid
             }
             catch(Exception e)
             {
-                Toasts("permission", "Send SMS");
+                Toasts("permission","send sms");
             }  
         
         }

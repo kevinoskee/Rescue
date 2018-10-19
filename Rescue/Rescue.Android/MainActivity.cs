@@ -108,7 +108,6 @@ namespace Rescue.Droid
                             Manifest.Permission.AccessNetworkState,
                             Manifest.Permission.AccessWifiState,
                             Manifest.Permission.Internet,
-                            Manifest.Permission.Camera
 
              };
 
