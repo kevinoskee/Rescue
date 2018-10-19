@@ -20,7 +20,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="person.png" BackgroundColor="#3498db" Grid.Column="0" VerticalOptions="Fill" HorizontalOptions="Fill" HeightRequest="20" Margin="0"/>
-                    <!--<Image Source="person.png" BackgroundColor="#0984e3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"/>-->
                     <Label x:Name="contactName" x:FieldModifier="Public" Grid.Column="1" Margin="2,10,2,10"
                FontSize="15" TextColor="White" FontAttributes="Bold" LineBreakMode="TailTruncation"
                HorizontalOptions="FillAndExpand" VerticalOptions="Center" />
@@ -33,7 +32,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Image Source="phone.png" BackgroundColor="#2980b9" Grid.Column="0" VerticalOptions="Fill" HorizontalOptions="Fill" HeightRequest="20" Margin="0"/>
-                    <!--<Image Source="person.png" BackgroundColor="#0984e3" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"/>-->
                     <Label x:Name="contactNumber" x:FieldModifier="Public" Grid.Column="1" Margin="2,10,2,10"
                FontSize="15" TextColor="White" FontAttributes="Bold" LineBreakMode="TailTruncation"
                HorizontalOptions="FillAndExpand" VerticalOptions="Center" />

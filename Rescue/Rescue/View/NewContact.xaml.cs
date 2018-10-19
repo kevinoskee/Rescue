@@ -27,8 +27,6 @@ namespace Rescue.View
         string emergencyName;
         public NewContact (string emergency)
 		{
-            var setupViewModel = new SetUpViewModel(emergency);
-            this.BindingContext = setupViewModel;
             InitializeComponent();
             emergencyName = emergency;
 		}

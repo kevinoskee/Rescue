@@ -25,37 +25,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <!--<RowDefinition Height="Auto"/>-->
             </Grid.RowDefinitions>
             <Label x:Name="emergencyName" TextColor="Transparent" Grid.Row="0" Text="{Binding EmergencyName, Mode=TwoWay}"/>
             <custom:CustomEditor    x:Name="messageTemplate" Text="{Binding MessageTemplate, Mode=TwoWay}"  FontSize="17" Placeholder="Message Template"      Grid.Row ="0" 
             Grid.ColumnSpan="2"  HorizontalOptions="Fill"
             VerticalOptions="Fill" HeightRequest="100"    TextColor="Black"
                            FontAttributes="Bold"/>
-            <!--<custom:CustomEntry
-                            x:Name="messageTemplate"
-                            Grid.Row ="0" 
-            Grid.ColumnSpan="2"
-                            CornerRadius="10"
-                            IsCurvedCornersEnabled="True"
-                            BorderColor="#34495e"
-                            HorizontalTextAlignment="Start"
-                            FontSize="17"
-                            Placeholder="Message Template"
-                            PlaceholderColor="Gray"
-                           TextColor="Black"
-                           FontAttributes="Bold"
-                          Text="{Binding MessageTemplate, Mode=TwoWay}"
-               
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="FillAndExpand"/>-->
-
-      
-
-            <!--<Entry x:Name="contactName" Grid.Row="2" Grid.Column="1"
-               Text="{Binding ContactName}" FontSize="15" TextColor="Black"
-               HorizontalOptions="Fill" VerticalOptions="Center"/>-->
-
             <Button Grid.Row="1" 
                 x:Name="saveBtn" BackgroundColor="#2ecc71" 
                 Text="SAVE" Font="20" TextColor="White"   FontAttributes="Bold"

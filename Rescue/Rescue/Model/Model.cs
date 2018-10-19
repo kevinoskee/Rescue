@@ -43,8 +43,6 @@ namespace Rescue.Model
         public string City { get; set; }
         public DateTime Birthdate { get; set; }
         public string BloodGroup { get; set; }
-        //public string Medications { get; set; }
-        //public string Allergies { get; set; }
         public string OtherInfo { get; set; }
 
     }

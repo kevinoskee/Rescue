@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ViewModel\EditProfileViewModel.cs~RF730dd2b.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.4.168" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />

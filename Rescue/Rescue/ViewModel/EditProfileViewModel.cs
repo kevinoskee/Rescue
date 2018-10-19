@@ -16,7 +16,16 @@ namespace Rescue.ViewModel
     public class EditProfileViewModel
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),"Rescue.db3");
-        int profileId;
+        public event PropertyChangedEventHandler PropertyChanged;
+        private int profileId;
+        public int ProfileId
+        {
+            get { return profileId; }
+            set
+            {
+                profileId = value;
+            }
+        }
         private string firstName;
         public string FirstName
         {
@@ -24,6 +33,7 @@ namespace Rescue.ViewModel
             set
             {
                 firstName = value;
+                NotifyPropertyChanged();
             }
         }
         private string middleName;
@@ -33,6 +43,7 @@ namespace Rescue.ViewModel
             set
             {
                 middleName = value;
+                NotifyPropertyChanged();
             }
         }
         private string lastName;
@@ -42,6 +53,7 @@ namespace Rescue.ViewModel
             set
             {
                lastName = value;
+                NotifyPropertyChanged();
             }
         }
         private string houseNumber;
@@ -51,6 +63,7 @@ namespace Rescue.ViewModel
             set
             {
                 houseNumber = value;
+                NotifyPropertyChanged();
             }
         }
         private string street;
@@ -60,6 +73,7 @@ namespace Rescue.ViewModel
             set
             {
                 street = value;
+                NotifyPropertyChanged();
             }
         }
         private string barangay;
@@ -69,6 +83,7 @@ namespace Rescue.ViewModel
             set
             {
                 barangay = value;
+                NotifyPropertyChanged();
             }
         }
         private string town;
@@ -78,6 +93,7 @@ namespace Rescue.ViewModel
             set
             {
                town = value;
+                NotifyPropertyChanged();
             }
         }
         private string city;
@@ -87,6 +103,7 @@ namespace Rescue.ViewModel
             set
             {
                 city = value;
+                NotifyPropertyChanged();
             }
         }
         private DateTime birthDate = DateTime.Parse((Convert.ToInt32(DateTime.Now.Year) - 1).ToString() + '/' + DateTime.Now.Month + '/' + DateTime.Now.Day);
@@ -96,6 +113,7 @@ namespace Rescue.ViewModel
             set
             {
                 birthDate = value;
+                NotifyPropertyChanged();
             }
         }
         private string bloodGroup;
@@ -105,6 +123,7 @@ namespace Rescue.ViewModel
             set
             {
                 bloodGroup = value;
+                NotifyPropertyChanged();
             }
         }
         private string otherInfo;
@@ -114,6 +133,7 @@ namespace Rescue.ViewModel
             set
             {
                 otherInfo = value;
+                NotifyPropertyChanged();
             }
         }
 
@@ -131,20 +151,21 @@ namespace Rescue.ViewModel
         }
         public async void ShowData()
         {
+            
             ProfileDatabase db = new ProfileDatabase(dbPath);
-            var _db = await db.GetProfileAsync();
-            profileId = _db.ProfileId;
-            firstName = _db.FirstName;
-            middleName = _db.MiddleName;
-            lastName = _db.LastName;
-            houseNumber = _db.HouseNumber;
-            street = _db.Street;
-            barangay = _db.Barangay;
-            town = _db.Town;
-            city = _db.City;
-            birthDate = _db.Birthdate;
-            bloodGroup = _db.BloodGroup;
-            otherInfo = _db.OtherInfo;
+            var Profile = await db.GetProfileAsync();
+            profileId = Profile.ProfileId;
+            FirstName = Profile.FirstName;
+            MiddleName = Profile.MiddleName;
+            LastName = Profile.LastName;
+            HouseNumber = Profile.HouseNumber;
+            Street = Profile.Street;
+            Barangay = Profile.Barangay;
+            Town = Profile.Town;
+            City = Profile.City;
+            BirthDate = Profile.Birthdate;
+            BloodGroup = Profile.BloodGroup;
+            OtherInfo = Profile.OtherInfo;
         }
         public void OnCreate()
         {
@@ -165,11 +186,12 @@ namespace Rescue.ViewModel
                     OtherInfo = otherInfo
                 };
                 ProfileDatabase db = new ProfileDatabase(dbPath);
-                ShowAlert(db.AddProfile(Profile), "create");
-               
+                DependencyService.Get<IToast>().Toasts("createProfile", db.AddProfile(Profile));
+                Application.Current.MainPage = new MainPage();
+
             }
             else
-                ShowAlert("failed","create");
+                DependencyService.Get<IToast>().Toasts("createProfile", "failed");
         }
         public void OnSave()
         {
@@ -191,11 +213,11 @@ namespace Rescue.ViewModel
                     OtherInfo = otherInfo
                 };
                 ProfileDatabase db = new ProfileDatabase(dbPath);
-                ShowAlert(db.UpdateProfile(Profile), "edit");
+                DependencyService.Get<IToast>().Toasts("updateProfile", db.UpdateProfile(Profile));
 
             }
             else
-                ShowAlert("failed","edit");
+                DependencyService.Get<IToast>().Toasts("updateProfile", "failed");
         }
         public bool CheckFields()
         {
@@ -204,6 +226,11 @@ namespace Rescue.ViewModel
             else
                 return false;
         }
+        public void NotifyPropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
 
     }
 }

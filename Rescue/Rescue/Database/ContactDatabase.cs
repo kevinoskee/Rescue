@@ -38,16 +38,7 @@ namespace Rescue.Database
         {
             return conn.Table<Contact>().Where(i => i.EmergencyName == emergency).CountAsync();
         }
-        ////CHECK IF EMPTY
-        //public bool CheckEmergency()
-        //{
-        //    var entryCount = conn.Table<Emergency>().Count();
-        //    if (entryCount > 0)
-        //        return true;
-        //    else
-        //        return false;
-        //}
-
+       
         //INSERT  
         public string AddContact(Contact contact)
         {

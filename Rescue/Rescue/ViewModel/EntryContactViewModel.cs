@@ -25,16 +25,7 @@ namespace Rescue.ViewModel
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Rescue.db3");
         public event PropertyChangedEventHandler PropertyChanged;
-        //private Contact contact;
-        //public Contact Contact
-        //{
-        //    get { return contact; }
-        //    set
-        //    {
-        //        contact = value;
-        //        NotifyPropertyChanged("Contact");
-        //    }
-        //}
+
         private string emergencyName;
         public string EmergencyName
         {
@@ -81,10 +72,7 @@ namespace Rescue.ViewModel
             contactId = id;
             Add = new Command(OnAdd);
             if (function == "update")
-                ShowData(emergency, id);
-            // ShowContact("new", emergencyName);
-            //contact.EmergencyName = emergency;
-            //ShowData(emergency);
+                ShowData(emergency, id); 
         }
 
         public async void ShowData(string emergency, int id)
@@ -94,12 +82,6 @@ namespace Rescue.ViewModel
             EmergencyName = Contact.EmergencyName;
             ContactName = Contact.ContactName;
             ContactNumber = Contact.ContactNumber;
-            //var _db = App.EmergencyDatabase.GetEmergency(emergency);
-            //EmergencyImage = emergency.ToLower() + ".png";
-            //EmergencyName = _db.EmergencyName;
-            //ContactName = _db.ContactName;
-            //ContactNumber = _db.ContactNumber;
-            //MessageTemplate = _db.MessageTemplate;
         }
 
         public async void OnAdd(object function)
@@ -116,7 +98,6 @@ namespace Rescue.ViewModel
                             ContactName = contactName,
                             ContactNumber = contactNumber
                         };
-                        //   DependencyService.Get<IToast>().Toasts("custom",emergency);
                         DependencyService.Get<IToast>().Toasts("addContact", db.AddContact(Contact));
                         ContactName = "";
                         ContactNumber = "";

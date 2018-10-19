@@ -63,11 +63,6 @@
                 MaxLength="11"
                          Text="{Binding ContactNumber, Mode=TwoWay}"
                HorizontalOptions="FillAndExpand"/>
-
-            <!--<Entry x:Name="contactName" Grid.Row="2" Grid.Column="1"
-               Text="{Binding ContactName}" FontSize="15" TextColor="Black"
-               HorizontalOptions="Fill" VerticalOptions="Center"/>-->
-
             <Button Grid.Row="2" IsVisible="false"
                 x:Name="addBtn" BackgroundColor="#2ecc71" 
                 Text="ADD" Font="20" TextColor="White"   FontAttributes="Bold"

@@ -21,7 +21,6 @@ namespace Rescue.Droid
     {
         int powercount = 0;
         Intent intent;
-        private PowerButtonService powerButtonService;
         Context ctx;
         public Context GetCtx()
         {
@@ -37,8 +36,6 @@ namespace Rescue.Droid
 
 
             base.OnCreate(bundle);
-            //var intent = new Intent(ApplicationContext, typeof(PowerButtonService));
-            //var source = PendingIntent.GetBroadcast(ApplicationContext, 0, intent, 0);
 
             Rg.Plugins.Popup.Popup.Init(this, bundle);
 
@@ -98,7 +95,6 @@ namespace Rescue.Droid
 
         readonly string[] PermissionsGroupLocation =
             {
-                            //TODO add more permissions
                             Manifest.Permission.AccessCoarseLocation,
                             Manifest.Permission.AccessFineLocation,
                             Manifest.Permission.SendSms,
@@ -107,8 +103,7 @@ namespace Rescue.Droid
                             Manifest.Permission.AccessMockLocation,
                             Manifest.Permission.AccessNetworkState,
                             Manifest.Permission.AccessWifiState,
-                            Manifest.Permission.Internet,
-                            Manifest.Permission.Camera
+                            Manifest.Permission.Internet,              
 
              };
 
@@ -118,7 +113,6 @@ namespace Rescue.Droid
 
             if (ShouldShowRequestPermissionRationale(permission))
             {
-                //set alert for executing the task
                 AlertDialog.Builder alert = new AlertDialog.Builder(this);
                 alert.SetTitle("Permissions Needed");
                 alert.SetMessage("The application need special permissions to continue");
@@ -157,7 +151,7 @@ namespace Rescue.Droid
                     }
                     break;
             }
-            //base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+       
         }
 
         public override void OnBackPressed()

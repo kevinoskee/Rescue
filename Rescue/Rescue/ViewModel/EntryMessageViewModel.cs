@@ -25,16 +25,7 @@ namespace Rescue.ViewModel
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Rescue.db3");
         public event PropertyChangedEventHandler PropertyChanged;
-        //private Contact contact;
-        //public Contact Contact
-        //{
-        //    get { return contact; }
-        //    set
-        //    {
-        //        contact = value;
-        //        NotifyPropertyChanged("Contact");
-        //    }
-        //}
+   
         private string emergencyName;
         public string EmergencyName
         {
@@ -62,9 +53,6 @@ namespace Rescue.ViewModel
             emergencyName = emergency;
             Save = new Command(OnSave);
             ShowData(emergency);
-            // ShowContact("new", emergencyName);
-            //contact.EmergencyName = emergency;
-            //ShowData(emergency);
         }
 
         public async void ShowData(string emergency)
@@ -82,13 +70,9 @@ namespace Rescue.ViewModel
             MessageDatabase db = new MessageDatabase(dbPath);
             if (CheckFields())
             {
-                
-                        var SaveMessage = await db.GetMessageAsync(emergencyName);
-                        SaveMessage.MessageTemplate = messageTemplate;
-                        DependencyService.Get<IToast>().Toasts("updateMessage", db.UpdateMessage(SaveMessage));
-                       
-                       
-                
+                var SaveMessage = await db.GetMessageAsync(emergencyName);
+                SaveMessage.MessageTemplate = messageTemplate;
+                DependencyService.Get<IToast>().Toasts("updateMessage", db.UpdateMessage(SaveMessage));
             }
             else
                 DependencyService.Get<IToast>().Toasts("updateMessage", "failed");

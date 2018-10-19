@@ -16,7 +16,6 @@ namespace Rescue.View
 		{
             var editProfileViewModel = new EditProfileViewModel(function);
             this.BindingContext = editProfileViewModel;
-            editProfileViewModel.ShowAlert += (string status,string func) => ShowAlert(status,function);
             InitializeComponent();
             ChangeButton(function);
 		}
@@ -36,23 +35,6 @@ namespace Rescue.View
                     break;
             }
         }
-        public async void ShowAlert(string status,string function)
-        {
-            switch (status)
-            {
-                case "success":
-                    if (function == "create")
-                        await DisplayAlert("Success", "Profile has been created", "OK");
-                    else
-                        await DisplayAlert("Success", "Profile has been updated", "OK");
-                    Application.Current.MainPage = new MainPage();
-                    break;
-
-                case "failed":
-                    await DisplayAlert("Error", "Please complete the required info", "OK");
-                    break;
-            }
-            
-        }
+ 
 	}
 }

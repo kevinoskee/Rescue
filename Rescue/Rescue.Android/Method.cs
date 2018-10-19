@@ -48,7 +48,6 @@ namespace Rescue.Droid
                     return;
                 }
             }
-
             try
             {
                 Geocoder geoCoder = new Geocoder();
@@ -241,6 +240,30 @@ namespace Rescue.Droid
                     else
                     {
                         toast.SetText("Default Message Template");
+                        toast.Show();
+                    }
+                    break;
+                case "createProfile":
+                    if (status == "success")
+                    {
+                        toast.SetText("Profile Created");
+                        toast.Show();
+                    }
+                    else
+                    {
+                        toast.SetText("Please complete form");
+                        toast.Show();
+                    }
+                    break;
+                case "updateProfile":
+                    if (status == "success")
+                    {
+                        toast.SetText("Profile Updated");
+                        toast.Show();
+                    }
+                    else
+                    {
+                        toast.SetText("Please complete form");
                         toast.Show();
                     }
                     break;

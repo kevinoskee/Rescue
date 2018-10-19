@@ -25,9 +25,6 @@ namespace Rescue.View
 
         public SetUpView(string emergency)
         {
-            emergencyName = emergency;
-            var SetupViewModel = new SetUpViewModel(emergency);
-            this.BindingContext = SetupViewModel;
             InitializeComponent();
             CountContact("Init",emergency);
             MessagingCenter.Subscribe<App>((App)Application.Current, "OnContactAdded", (sender) =>
@@ -43,7 +40,7 @@ namespace Rescue.View
                 CountContact("Delete",emergency);
             });
             ToolbarItems.Add(new ToolbarItem("Message", "message.png", async () => {
-                await PopupNavigation.Instance.PushAsync(new EntryMessageView(emergencyName));}));
+                await PopupNavigation.Instance.PushAsync(new EntryMessageView(emergency));}));
         }
      
         public async void ShowContact(string emergency)

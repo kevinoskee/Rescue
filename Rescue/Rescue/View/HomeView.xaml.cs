@@ -25,28 +25,7 @@ namespace Rescue.View
         {
             var homeviewModel = new HomeViewModel();
             this.BindingContext = homeviewModel;
-            #region change
-            //homeviewModel.ChangeButton += (string name) =>
-            //{
-            //    switch (name)
-            //    {
-            //        case "edit":
-            //            //configBtn.IsVisible = false;
-            //            //doneBtn.IsVisible = true;
-            //            //returnBtn.IsVisible = true;
-            //            CheckEmergency("editMode");
-            //            break;
-            //        case "done":
-            //        case "return":
-            //            //configBtn.IsVisible = true;
-            //            //doneBtn.IsVisible = false;
-            //            //returnBtn.IsVisible = false;
-            //            CheckEmergency("readyMode");
-            //            break;
-
-            //    }               
-            //};
-            #endregion
+          
             InitializeComponent();
             CheckEmergency(emergencyMode.Text);
 

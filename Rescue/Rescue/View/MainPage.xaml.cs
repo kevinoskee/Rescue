@@ -11,8 +11,6 @@ namespace Rescue.View
 	{
 		public MainPage()
 		{
-            /* var mainviewModel = new MainViewModel();
-             this.BindingContext = mainviewModel;*/
             InitializeComponent();
             var detail = new NavigationPage(new HomeView())
             {

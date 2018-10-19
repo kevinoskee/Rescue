@@ -20,7 +20,6 @@ namespace Rescue.View
 		{
             var ProfileViewModel = new ProfileViewModel();
             this.BindingContext = ProfileViewModel;
-
             InitializeComponent();
             SetData();
             
@@ -29,29 +28,17 @@ namespace Rescue.View
         {
             ProfileDatabase db = new ProfileDatabase(dbPath);
             var _db = await db.GetProfileAsync();
-            if (_db != null)
-            {
-                string _name = "";
-                string _address = "";
-                int _age;
-                _name += _db.FirstName + " " + ((_db.MiddleName != null) ? _db.MiddleName.ElementAt(0).ToString() : "") + ". " + _db.LastName;
-                name.Text = _name;
-                _address += _db.HouseNumber + " " + _db.Street + " St. Brgy. " + _db.Barangay + " " + _db.Town + ", " + _db.City;
-                address.Text = _address;
-                _age = ((DateTime.Now.DayOfYear < _db.Birthdate.DayOfYear) ? DateTime.Now.Year - _db.Birthdate.Year - 1 : DateTime.Now.Year - _db.Birthdate.Year);
-                age.Text = _age.ToString();
-                blood.Text = _db.BloodGroup;
-                other.Text = _db.OtherInfo;
-            }
-            else
-            {
-                string _data = "No Data";
-                name.Text = _data;
-                address.Text = _data;
-                age.Text = _data;
-                blood.Text = _data;
-                other.Text = _data;
-            }
+            string _name = "";
+            string _address = "";
+            int _age;
+            _name += _db.FirstName + " " + ((_db.MiddleName != null) ? _db.MiddleName.ElementAt(0).ToString() : "") + ". " + _db.LastName;
+            name.Text = _name;
+            _address += _db.HouseNumber + " " + _db.Street + " St. Brgy. " + _db.Barangay + " " + _db.Town + ", " + _db.City;
+            address.Text = _address;
+            _age = ((DateTime.Now.DayOfYear < _db.Birthdate.DayOfYear) ? DateTime.Now.Year - _db.Birthdate.Year - 1 : DateTime.Now.Year - _db.Birthdate.Year);
+            age.Text = _age.ToString();
+            blood.Text = _db.BloodGroup;
+            other.Text = _db.OtherInfo;
 
         }
 	}
