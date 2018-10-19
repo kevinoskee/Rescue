@@ -18,6 +18,7 @@ namespace Rescue.View
     public partial class SetUpView : ContentPage
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Rescue.db3");
+        Boolean isRunning = false;
         public bool hasEntry = false;
 
         public string emergencyName;
@@ -43,7 +44,17 @@ namespace Rescue.View
                 CountContact("Delete",emergency);
             });
             ToolbarItems.Add(new ToolbarItem("Message", "message.png", async () => {
-                await PopupNavigation.Instance.PushAsync(new EntryMessageView(emergencyName));}));
+
+                if (isRunning)
+                    return;
+                else
+                    isRunning = true;
+                await PopupNavigation.Instance.PushAsync(new EntryMessageView(emergencyName));
+                isRunning = false;
+            }));
+           
+
+                
         }
      
         public async void ShowContact(string emergency)
@@ -102,14 +113,17 @@ namespace Rescue.View
             //   
         }
 
-         public void OnNew(object s, EventArgs e)
+         public async void OnNew(object s, EventArgs e)
         {
-           PopupNavigation.Instance.PushAsync(new EntryContactView("add", emergencyName));
+
+            if (isRunning)
+                return;
+            else
+                isRunning = true;
+            await PopupNavigation.Instance.PushAsync(new EntryContactView("add", emergencyName));
+            isRunning = false;
+        
  
-        }
-        public void OnRefresh(object s, EventArgs e)
-        {
-            ShowContact(emergencyName);
         }
         
 

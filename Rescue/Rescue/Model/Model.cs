@@ -33,18 +33,12 @@ namespace Rescue.Model
     {
         [PrimaryKey,AutoIncrement]
         public int ProfileId { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public string HouseNumber { get; set; }
-        public string Street { get; set; }
-        public string Barangay { get; set; }
-        public string Town { get; set; }
-        public string City { get; set; }
-        public DateTime Birthdate { get; set; }
+        public string FullName { get; set; }
+        public string Address { get; set; }
+        public DateTime BirthDate { get; set; }
         public string BloodGroup { get; set; }
-        //public string Medications { get; set; }
-        //public string Allergies { get; set; }
+        public string Medications { get; set; }
+        public string Allergies { get; set; }
         public string OtherInfo { get; set; }
 
     }

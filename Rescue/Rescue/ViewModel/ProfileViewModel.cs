@@ -21,7 +21,7 @@ namespace Rescue.ViewModel
 
         public async void OnEditProfile()
         {
-            await App.NavigateMasterDetail(new EditProfileView("edit"));
+          //  await App.NavigateMasterDetail(new EditProfileView("edit"));
         }
     }
 }

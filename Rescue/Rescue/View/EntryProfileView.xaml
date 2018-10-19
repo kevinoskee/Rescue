@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage x:Class="Rescue.View.EntryProfileView"
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+                 xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns:custom="clr-namespace:Rescue.Extras"
+                  xmlns:local="clr-namespace:Rescue">
+
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation DurationIn="400"
+                                   DurationOut="300"
+                                   EasingIn="SinOut"
+                                   EasingOut="SinIn"
+                                   HasBackgroundAnimation="True"
+                                   PositionIn="Center"
+                                   PositionOut="Center"
+                                   ScaleIn="1.2"
+                                   ScaleOut="0.8" />
+    </pages:PopupPage.Animation>
+    <Frame CornerRadius="10" HorizontalOptions="Fill" VerticalOptions="Center">
+        <Grid HorizontalOptions="Fill" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.4*"/>
+                <ColumnDefinition Width="0.4*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+            <custom:CustomEntry
+                            x:Name="fullName"
+                            Grid.Row ="0" 
+            Grid.ColumnSpan="2"
+                            CornerRadius="10"
+                            IsCurvedCornersEnabled="True"
+                            BorderColor="#34495e"
+                            HorizontalTextAlignment="Center"
+                            FontSize="17"
+                            Placeholder="Full Name"
+                            PlaceholderColor="Gray"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                          Text="{Binding FullName, Mode=TwoWay}"
+            HorizontalOptions="FillAndExpand"/>
+            <custom:CustomEntry
+                            x:Name="address"
+                            Grid.Row ="1" 
+                   Grid.ColumnSpan="2"
+                            CornerRadius="10"
+                            IsCurvedCornersEnabled="True"
+                            BorderColor="#34495e"
+                            HorizontalTextAlignment="Center"
+                            FontSize="17"
+                            Placeholder="Address"
+                            PlaceholderColor="Gray"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                         Text="{Binding Address, Mode=TwoWay}"
+               HorizontalOptions="FillAndExpand"/>
+
+            <DatePicker x:Name="birthdate"
+                       Grid.Row="2" Grid.Column="0"
+                       Format="MMMM dd, yyyy"  MaximumDate="{Binding BirthDate, Mode=TwoWay}"  Date="{Binding BirthDate, Mode=TwoWay}" 
+                            FontSize="17"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"/>
+
+            <Picker x:Name="bloodGroup" Title="Choose blood group"
+                        Grid.Row="2" Grid.Column="1"
+                        SelectedItem="{Binding BloodGroup, Mode=TwoWay}"
+                            FontSize="17"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center">
+                <Picker.Items>
+                    <x:String>O-</x:String>
+                    <x:String>O+</x:String>
+                    <x:String>A-</x:String>
+                    <x:String>A+</x:String>
+                    <x:String>B-</x:String>
+                    <x:String>B+</x:String>
+                    <x:String>AB-</x:String>
+                    <x:String>AB+</x:String>
+                </Picker.Items>
+            </Picker>
+            <custom:CustomEditor    x:Name="medications" Text="{Binding Medications, Mode=TwoWay}"  FontSize="17"     Grid.Row ="3" Grid.Column="0"
+            VerticalOptions="Fill" HeightRequest="50" 
+   Placeholder="Medications"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"/>
+            <custom:CustomEditor    x:Name="allergies" Text="{Binding Allergies, Mode=TwoWay}"  FontSize="17"     Grid.Row ="3" Grid.Column="1"
+            VerticalOptions="Fill" HeightRequest="50" 
+   Placeholder="Allergies"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"/>
+            <custom:CustomEditor    x:Name="oherInfo" Text="{Binding OtherInfo, Mode=TwoWay}"  FontSize="17"     Grid.Row ="4" Grid.ColumnSpan="2"
+            VerticalOptions="Fill" HeightRequest="50" 
+   Placeholder="Other Information"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"/>
+            <Button Grid.Row="5" IsVisible="false" Grid.ColumnSpan="2"
+                x:Name="addBtn" BackgroundColor="#2ecc71" 
+                Text="CREATE PROFILE" Font="20" TextColor="White"   FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Command="{Binding Add}"
+                    CommandParameter="Add"
+                CornerRadius="10"/>
+            <Button Grid.Row="5" IsVisible="false"
+                x:Name="updateBtn" BackgroundColor="#2ecc71" 
+                Text="UPDATE" Font="20" TextColor="White"   FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+               Command="{Binding Add}"
+                    CommandParameter="Update"
+                CornerRadius="10"/>
+            <Button Grid.Row="5" Grid.Column="1" IsVisible="false"
+                x:Name="cancelBtn" BackgroundColor="#7f8c8d"
+                Text="CANCEL" Font="20" TextColor="White"    FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Clicked="OnCancel"
+                CornerRadius="10"
+              />
+        </Grid>
+    </Frame>
+
+</pages:PopupPage>
+
+
+<!--<custom:CustomEntry
+                            x:Name="fullName"
+                            Grid.Row ="0" 
+            Grid.ColumnSpan="2"
+                            CornerRadius="10"
+                            IsCurvedCornersEnabled="True"
+                            BorderColor="#34495e"
+                            HorizontalTextAlignment="Center"
+                            FontSize="17"
+                            Placeholder="Full Name"
+                            PlaceholderColor="Gray"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                          Text="{Binding FullName, Mode=TwoWay}"
+            HorizontalOptions="FillAndExpand"/>
+
+    <custom:CustomEntry
+                            x:Name="address"
+                            Grid.Row ="1" 
+                   Grid.ColumnSpan="2"
+                            CornerRadius="10"
+                            IsCurvedCornersEnabled="True"
+                            BorderColor="#34495e"
+                            HorizontalTextAlignment="Center"
+                            FontSize="17"
+                            Placeholder="Address"
+                            PlaceholderColor="Gray"
+                           TextColor="Black"
+                           FontAttributes="Bold"
+                Keyboard="Numeric"
+                MaxLength="11"
+                         Text="{Binding Address, Mode=TwoWay}"
+               HorizontalOptions="FillAndExpand"/>
+
+    <DatePicker x:Name="birthdate"
+                       Grid.Row="2" Grid.ColumnSpan="2"
+                       Format="MMMM dd, yyyy"  MaximumDate="{Binding BirthDate, Mode=TwoWay}"  Date="{Binding BirthDate, Mode=TwoWay}" 
+                            FontSize="17"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center"/>
+
+    <Picker x:Name="bloodGroup" Title="Choose blood group"
+                        Grid.Row="3" Grid.ColumnSpan="2"
+                        SelectedItem="{Binding BloodGroup, Mode=TwoWay}"
+                            FontSize="17"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                            VerticalOptions="Center">
+        <Picker.Items>
+            <x:String>O-</x:String>
+            <x:String>O+</x:String>
+            <x:String>A-</x:String>
+            <x:String>A+</x:String>
+            <x:String>B-</x:String>
+            <x:String>B+</x:String>
+            <x:String>AB-</x:String>
+            <x:String>AB+</x:String>
+        </Picker.Items>
+    </Picker>
+    <custom:CustomEditor    x:Name="medications" Text="{Binding Medications, Mode=TwoWay}"  FontSize="17"     Grid.Row ="4" Grid.ColumnSpan="2"
+            VerticalOptions="Fill" HeightRequest="50" 
+   Placeholder="Medications"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"/>
+    <custom:CustomEditor    x:Name="allergies" Text="{Binding Allergies, Mode=TwoWay}"  FontSize="17"     Grid.Row ="5" Grid.ColumnSpan="2"
+            VerticalOptions="Fill" HeightRequest="50" 
+   Placeholder="Allergies"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"/>
+    <custom:CustomEditor    x:Name="oherInfo" Text="{Binding OtherInfo, Mode=TwoWay}"  FontSize="17"     Grid.Row ="6" Grid.ColumnSpan="2"
+            VerticalOptions="Fill" HeightRequest="50" 
+   Placeholder="Other Information"
+                            PlaceholderColor="Gray"
+                            TextColor="Black"
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"/>
+    <Button Grid.Row="7" IsVisible="false" Grid.ColumnSpan="2"
+                x:Name="addBtn" BackgroundColor="#2ecc71" 
+                Text="CREATE" Font="20" TextColor="White"   FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Command="{Binding Add}"
+                    CommandParameter="Add"
+                CornerRadius="10"/>
+    <Button Grid.Row="7" IsVisible="false"
+                x:Name="updateBtn" BackgroundColor="#2ecc71" 
+                Text="UPDATE" Font="20" TextColor="White"   FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+               Command="{Binding Add}"
+                    CommandParameter="Update"
+                CornerRadius="10"/>
+    <Button Grid.Row="7" Grid.Column="1" IsVisible="false" 
+                x:Name="cancelBtn" BackgroundColor="#7f8c8d"
+                Text="CANCEL" Font="20" TextColor="White"    FontAttributes="Bold"
+                HorizontalOptions="FillAndExpand" VerticalOptions="Center"
+                Clicked="OnCancel"
+                CornerRadius="10"/>-->

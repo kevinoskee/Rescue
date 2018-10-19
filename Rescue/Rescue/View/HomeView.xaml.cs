@@ -21,6 +21,7 @@ namespace Rescue.View
     public partial class HomeView : ContentPage
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),"Rescue.db3");
+        Boolean isRunning = false;
         public HomeView()
         {
             var homeviewModel = new HomeViewModel();
@@ -49,9 +50,28 @@ namespace Rescue.View
             #endregion
             InitializeComponent();
             CheckEmergency(emergencyMode.Text);
-
+            ToolbarItems.Add(new ToolbarItem("Profile", "profile_small.png", async () => {
+                        if (isRunning)
+                            return;
+                        else
+                            isRunning = true;
+                await PopupNavigation.Instance.PushAsync(new EntryProfileView("update"));
+                isRunning = false;
+                
+            }));
+            CheckProfile();
+           
         }
-        
+        public async void CheckProfile()
+        {
+            ProfileDatabase db = new ProfileDatabase(dbPath);
+            var _db = await db.CountProfile();
+            if (_db <= 0)
+            {
+                await PopupNavigation.Instance.PushAsync(new EntryProfileView("add"));
+            }
+           
+        }
         public async void CheckEmergency(string mode)
         {
           

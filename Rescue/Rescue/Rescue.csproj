@@ -16,8 +16,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="View\EntryProfileView.xaml.cs">
+      <DependentUpon>EntryProfileView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="App.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="View\EntryProfileView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

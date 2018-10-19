@@ -55,7 +55,7 @@ namespace Rescue.Droid
 
             if (locationManager.IsProviderEnabled(LocationManager.GpsProvider) == false)
             {
-                 ShowGPSDisabledAlertToUser();
+               //  ShowGPSDisabledAlertToUser();
             }
             IntentFilter filter = new IntentFilter(Intent.ActionScreenOn);
             filter.AddAction(Intent.ActionScreenOff);
@@ -78,7 +78,7 @@ namespace Rescue.Droid
             alert.SetButton2("No", (c, ev) =>
             {
                 var activity = (Activity)Forms.Context;
-                activity.FinishAffinity();
+               // activity.FinishAffinity();
             });
             alert.Show();
         }

@@ -18,14 +18,14 @@ namespace Rescue.View
             {
                 BarBackgroundColor = Color.FromHex("#34495e")
             };
-            var master = new NavigationPage(new ProfileView())
-            {
-                BarBackgroundColor = Color.FromHex("#2c3e50"),
-                Title="Master",
-            };
-            this.Master = master;
+            //var master = new NavigationPage(new ProfileView())
+            //{
+            //    BarBackgroundColor = Color.FromHex("#2c3e50"),
+            //    Title="Master",
+            //};
+           // this.Master = master;
             this.Detail = detail;
-            App.MasterDetail = this;
+            //App.MasterDetail = this;
 
 
 

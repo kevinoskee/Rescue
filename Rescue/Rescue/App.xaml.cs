@@ -9,37 +9,34 @@ using Rescue.View;
 using Rescue.Model;
 using SQLite;
 using System.IO;
+using Rg.Plugins.Popup.Services;
 namespace Rescue
 {
 	public partial class App : Application
 	{
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Rescue.db3");
 
-        public static MasterDetailPage MasterDetail { get; set; }
-        public async static Task NavigateMasterDetail(Page page)
-        {
-            App.MasterDetail.IsPresented = false;
-            await App.MasterDetail.Detail.Navigation.PushAsync(page);
-        }
+   //     public static MasterDetailPage MasterDetail { get; set; }
+        //public async static Task NavigateMasterDetail(Page page)
+        //{
+        //    App.MasterDetail.IsPresented = false;
+        //    await App.MasterDetail.Detail.Navigation.PushAsync(page);
+        //}
 
 		public App ()
 		{
 			InitializeComponent();
-            ProfileDatabase db = new ProfileDatabase(dbPath);
-            var _db = db.CheckProfileAsync();
-            if (_db == "No Profile")
-            {
-                MainPage = new NavigationPage(new EditProfileView("create"))
-                {
-                    BarBackgroundColor = Color.FromHex("#2c3e50")
-                };
-                
-            }
-            else
-            {
-                MainPage = new Rescue.View.MainPage();
-            }
+            MainPage = new NavigationPage(new HomeView())
+            { Title = "Rescue",
+               BarBackgroundColor = Color.FromHex("#34495e")
+            };
+          
+            //   MainPage = nav;
+            ///MainPage = new Rescue.View.HomeView();
+
         }
+        
+
 
         //public static ProfileDatabase ProfileDatabase
         //{
@@ -48,7 +45,7 @@ namespace Rescue
         //    {
         //        if (profileDatabase == null)
         //        {
-              
+
         //            profileDatabase = new ProfileDatabase(dbPath);
 
         //        }

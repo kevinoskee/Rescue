@@ -22,6 +22,7 @@ namespace Rescue.ViewModel
     public class HomeViewModel : INotifyPropertyChanged
     {
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),"Rescue.db3");
+        Boolean isRunning = false;
         public event PropertyChangedEventHandler PropertyChanged;
         public Action<string> ChangeButton;
         public bool hasContact;
@@ -49,10 +50,13 @@ namespace Rescue.ViewModel
             //Edit = new Command(OnEdit);
             //Done = new Command(OnDone);
             //Return = new Command(OnReturn);
-            EmergencyTap= new Command(OnEmergencyTap);
+           
+              
+            EmergencyTap = new Command(OnEmergencyTap);
             InitMessage();
             InitLocation();
-  
+           
+
 
         }
     
@@ -75,8 +79,17 @@ namespace Rescue.ViewModel
         {
             if (EmergencyMode == "Setup Mode")
             {
-                await App.NavigateMasterDetail(new SetUpView(emergency.ToString()));
-                //await App.NavigateMasterDetail(new SetUpView(emergency.ToString()));
+                if (isRunning)
+                    return;
+                else
+                    isRunning = true;
+                await App.Current.MainPage.Navigation.PushAsync(new SetUpView(emergency.ToString()));
+                isRunning = false;
+
+
+                //NavigationPage nav = new NavigationPage(SetUpView(emergency.ToString());
+                //await  MainPage.NavigationPage(new SetUpView(emergency.ToString()));
+                ////await App.NavigateMasterDetail(new SetUpView(emergency.ToString()));
             }
             else
             {
@@ -139,15 +152,9 @@ namespace Rescue.ViewModel
 
         public async Task GetProfile()
         {
-            //DependencyService.Get<IToast>().Toasts("custom", "Getting Profile");
-            //ProfileDatabase profileDB = new ProfileDatabase(dbPath);
-            //var profile = await profileDB.GetProfileAsync();
-            //_name = profile.FirstName + " " + ((profile.MiddleName != null) ? profile.MiddleName.ElementAt(0).ToString() + ". " : "") + profile.LastName;
-            //_address = profile.HouseNumber + " " + profile.Street + " St. Brgy. " + profile.Barangay + " " + profile.Town + ", " + profile.City;
-            //_age = ((DateTime.Now.DayOfYear < profile.Birthdate.DayOfYear) ? DateTime.Now.Year - profile.Birthdate.Year - 1 : DateTime.Now.Year - profile.Birthdate.Year);
-            //_bloodgroup = profile.BloodGroup;
-            //_otherinfo = ((profile.OtherInfo != null) ? profile.OtherInfo : "");
-            //DependencyService.Get<IToast>().Toasts("custom", "Got Profile!");
+            ProfileDatabase db1 = new ProfileDatabase(dbPath);
+            var Profile = await db1.GetProfileAsync();
+            DependencyService.Get<IToast>().Toasts("custom", Profile.FullName);
         }
 
         public async Task SetMessage(string emergency)

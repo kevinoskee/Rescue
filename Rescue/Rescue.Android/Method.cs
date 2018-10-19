@@ -31,7 +31,7 @@ namespace Rescue.Droid
     public class Method : IGetLocation, IToast, IHideKeyboard, ISendSMS
     {
         string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Rescue.db3");
-        string prevLocation;
+        static string prevLocation;
         static string currLocation;
         Toast toast = Toast.MakeText(Forms.Context, "", ToastLength.Short);
 
@@ -66,13 +66,6 @@ namespace Rescue.Droid
                     Toasts("custom", "You're at : " + possibleAddresses);
 
                     LocationDatabase db = new LocationDatabase(dbPath);
-                    var tempLocation = await db.GetPrevLocationAsync();
-                    if (prevLocation != null)
-                        prevLocation = tempLocation.CurrentLocation;
-                    else
-                        prevLocation = "Unknown";
-
-                    db.ClearLocation();
 
                     var Location = new Location()
                     {
@@ -86,6 +79,12 @@ namespace Rescue.Droid
                 {
                     Toasts("custom", "Cannot get current location");
                     currLocation = "Unknown";
+                    LocationDatabase db = new LocationDatabase(dbPath);
+                    var tempLocation = await db.GetPrevLocationAsync();
+                    if (tempLocation != null)
+                        prevLocation = tempLocation.CurrentLocation;
+                    else
+                        prevLocation = "Unknown";
                     return;
                 }
             }
@@ -112,39 +111,65 @@ namespace Rescue.Droid
             }
             try
             {
-                string _name = "";
-                string _address = "";
-                int _age = 0;
-                string _bloodgroup = "";
-                string _otherinfo = "";
+                string fullname = "";
+                string address = "";
+                int age = 0;
+                string bloodgroup = "";
+                string medications = "";
+                string allergies = "";
+                string otherinfo = "";
+                bool noLocData = true;
                 string message1 = "Emergency Message:\n\n";
                 string message2 = "Other information:\n\n";
 
-                //await Location();
+                Geocoder geoCoder = new Geocoder();
 
-                //ProfileDatabase profileDB = new ProfileDatabase(dbPath);
-                //var profile = await profileDB.GetProfileAsync();
-                //_name = profile.FirstName + " " + ((profile.MiddleName != null) ? profile.MiddleName.ElementAt(0).ToString() + ". " : "") + profile.LastName;
-                //_address = profile.HouseNumber + " " + profile.Street + " St. Brgy. " + profile.Barangay + " " + profile.Town + ", " + profile.City;
-                //_age = ((DateTime.Now.DayOfYear < profile.Birthdate.DayOfYear) ? DateTime.Now.Year - profile.Birthdate.Year - 1 : DateTime.Now.Year - profile.Birthdate.Year);
-                //_bloodgroup = profile.BloodGroup;
-                //_otherinfo = (profile.OtherInfo ?? "");
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 50;
+              
+                ProfileDatabase profileDB = new ProfileDatabase(dbPath);
+                var profile = await profileDB.GetProfileAsync();
+                fullname = profile.FullName;
+                address = profile.Address;
+                age = ((DateTime.Now.DayOfYear < profile.BirthDate.DayOfYear) ? DateTime.Now.Year - profile.BirthDate.Year - 1 : DateTime.Now.Year - profile.BirthDate.Year);
+                bloodgroup = profile.BloodGroup;
+                medications = (profile.Medications ?? "");
+                allergies = (profile.Allergies ?? "");
+                otherinfo = (profile.OtherInfo ?? "");
 
                 MessageDatabase messageDB = new MessageDatabase(dbPath);
                 var messageTemp = await messageDB.GetMessageAsync(emergency);
                 message1 += messageTemp.MessageTemplate;
 
                 StringBuilder str1 = new StringBuilder();
-                str1.Append("\nCurrent Location: " + currLocation);
-                str1.Append("\nName: " + _name);
+                if (currLocation != "Unknown")
+                    str1.Append("\nCurrent Location: " + currLocation);
+                else if(currLocation == "Unknown" && prevLocation != null)
+                {
+                    str1.Append("\nCurrent Location: " + currLocation);
+                    str1.Append("\nPrevious Location: " + prevLocation);
+                }
+                else
+                {
+                    str1.Append("\nCurrent Location: " + currLocation);
+                    str1.Append("\nPrevious Location: " + prevLocation);
+                    str1.Append("\nAddress: " + address);
+                    noLocData = true;
+                }
+                str1.Append("\nName: " + fullname);
                 message1 = string.Concat(message1, str1.ToString());
 
                 StringBuilder str2 = new StringBuilder();
-                str2.Append("Address: " + _address);
-                str2.Append("\nAge: " + _age.ToString());
-                str2.Append("\nBlood Group: " + _bloodgroup);
-                if (_otherinfo != "")
-                    str2.Append("\nOther Information: " + _otherinfo);
+                if(!noLocData)
+                    str2.Append("Address: " + address + "\n");
+                str2.Append("Age: " + age.ToString());
+                str2.Append("\nBlood Group: " + bloodgroup);
+                if (medications != "")
+                    str2.Append("\nMedications: " + medications);
+                if (allergies != "")
+                    str2.Append("\nAllergies: " + allergies);
+                if (otherinfo != "")
+                    str2.Append("\nOther Information: " + otherinfo);
                 message2 = string.Concat(message2, str2.ToString());
 
 
@@ -193,6 +218,30 @@ namespace Rescue.Droid
                     else
                     {
                         toast.SetText("No More");
+                        toast.Show();
+                    }
+                    break;
+                case "addProfile":
+                    if (status == "success")
+                    {
+                        toast.SetText("Profile Created");
+                        toast.Show();
+                    }
+                    else
+                    {
+                        toast.SetText("Please enter data");
+                        toast.Show();
+                    }
+                    break;
+                case "updateProfile":
+                    if (status == "success")
+                    {
+                        toast.SetText("Profile Updated");
+                        toast.Show();
+                    }
+                    else
+                    {
+                        toast.SetText("Please enter data");
                         toast.Show();
                     }
                     break;
