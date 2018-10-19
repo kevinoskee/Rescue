@@ -27,9 +27,11 @@ namespace Rescue.Droid
         {
             return ctx;
         }
+
         protected async override void OnCreate(Bundle bundle)
         {
             await TryToGetPermissions();
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -53,7 +55,7 @@ namespace Rescue.Droid
 
             if (locationManager.IsProviderEnabled(LocationManager.GpsProvider) == false)
             {
-                // ShowGPSDisabledAlertToUser();
+                 ShowGPSDisabledAlertToUser();
             }
             IntentFilter filter = new IntentFilter(Intent.ActionScreenOn);
             filter.AddAction(Intent.ActionScreenOff);
@@ -61,6 +63,7 @@ namespace Rescue.Droid
             ScreenReceiver myReceiver = new ScreenReceiver();
             RegisterReceiver(myReceiver, filter);
         }
+
         public void ShowGPSDisabledAlertToUser()
         {
             AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -79,6 +82,7 @@ namespace Rescue.Droid
             });
             alert.Show();
         }
+
         async Task TryToGetPermissions()
         {
             if ((int)Build.VERSION.SdkInt >= 23)
@@ -89,6 +93,7 @@ namespace Rescue.Droid
 
 
         }
+
         const int RequestLocationId = 0;
 
         readonly string[] PermissionsGroupLocation =
@@ -106,6 +111,7 @@ namespace Rescue.Droid
                             Manifest.Permission.Camera
 
              };
+
         async Task GetPermissionsAsync()
         {
             const string permission = Manifest.Permission.AccessFineLocation;
@@ -136,20 +142,15 @@ namespace Rescue.Droid
             RequestPermissions(PermissionsGroupLocation, RequestLocationId);
 
         }
+
         public override async void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             switch (requestCode)
             {
                 case RequestLocationId:
                     {
-                        if (grantResults[0] == (int)Android.Content.PM.Permission.Granted)
+                        if (grantResults[0] != (int)Android.Content.PM.Permission.Granted)
                         {
-                            //  Toast.MakeText(this, "Permissions granted", ToastLength.Short).Show();
-
-                        }
-                        else
-                        {
-                            //Permission Denied :(
                             Toast.MakeText(this, "Permissions denied. Set in settings.", ToastLength.Short).Show();
 
                         }
@@ -158,34 +159,16 @@ namespace Rescue.Droid
             }
             //base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
         public override void OnBackPressed()
         {
             if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
             {
-                // Do something if there are some pages in the `PopupStack`
-            }
-            else
-            {
-                // Do something if there are not any pages in the `PopupStack`
-            }
 
+            }
+          
         }
-        //[Android.Runtime.Register("DispatchKeyEvent", "(Landroid/view/KeyEvent;)Z", "GetDispatchKeyEvent_Landroid_view_KeyEvent_Handler")]
-        //public override bool DispatchKeyEvent(KeyEvent e)
-        //{
 
-        //    if (e.KeyCode == Keycode.Power)
-        //    {
-        //        powercount++;
-        //        if (powercount == 2)
-        //        {
-
-        //            DependencyService.Get<IGetLocation>().Test();
-        //        }
-        //    }
-        //    return base.DispatchKeyEvent(e);
-        //    return true;
-        //}
     }
 }
 

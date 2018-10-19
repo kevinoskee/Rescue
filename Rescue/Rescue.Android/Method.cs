@@ -19,64 +19,150 @@ using Android.Telephony;
 using Xamarin.Android;
 using Plugin.LocalNotifications;
 using System.ServiceProcess;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using Rescue.Database;
+using System.IO;
+using Rescue.ViewModel;
 [assembly: Dependency(typeof(Rescue.Droid.Method))]
 namespace Rescue.Droid
 {
     [Activity(Label = "Method", ParentActivity = typeof(MainActivity))]
     public class Method : IGetLocation, IToast, IHideKeyboard, ISendSMS
     {
-        int powercount = 0;
-        internal string _randomNumber;
-
+        string dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "Rescue.db3");
+        string prevLocation;
+        static string currLocation;
         Toast toast = Toast.MakeText(Forms.Context, "", ToastLength.Short);
-      
-        public LocationModel locationModel = new LocationModel { };
-        
-        Geocoder geoCoder = new Geocoder();
-        public void Message(string number,string message)
-        {
-        //    Toast.MakeText(Forms.Context, locationModel.Location, ToastLength.Short).Show();
-
-        }
 
         public async Task Location()
         {
-            Toast.MakeText(Forms.Context, "Getting Location", ToastLength.Short).Show();
-            string strLocation = "";
-            var locator = CrossGeolocator.Current;
-            locator.DesiredAccuracy = 50;
-            
+            var locationStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
+            if (locationStatus != PermissionStatus.Granted)
+            {
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Location });
+                locationStatus = results[Permission.Location];
+                if (locationStatus != PermissionStatus.Granted)
+                {
+                    DependencyService.Get<IToast>().Toasts("custom", "Permission Denied");
+                    return;
+                }
+            }
+
             try
             {
-                var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(20));
-                locationModel.Location = "Location : Longitude - " + position.Longitude.ToString() + ",\n\tLatitude - " + position.Latitude.ToString();
-                var reversePosition = new Position(position.Latitude, position.Longitude);
-                var possibleAddresses = (await geoCoder.GetAddressesForPositionAsync(reversePosition)).FirstOrDefault();
-                Toasts("custom", possibleAddresses);
+                Geocoder geoCoder = new Geocoder();
+
+                Toasts("custom", "Getting Location");
+
+                var locator = CrossGeolocator.Current;
+                locator.DesiredAccuracy = 50;
+
+                try
+                {
+                    var position = await locator.GetPositionAsync(TimeSpan.FromSeconds(3));
+                    var reversePosition = new Position(position.Latitude, position.Longitude);
+                    var possibleAddresses = (await geoCoder.GetAddressesForPositionAsync(reversePosition)).FirstOrDefault();
+                    Toasts("custom", "You're at : " + possibleAddresses);
+
+                    LocationDatabase db = new LocationDatabase(dbPath);
+                    var tempLocation = await db.GetPrevLocationAsync();
+                    if (prevLocation != null)
+                        prevLocation = tempLocation.CurrentLocation;
+                    else
+                        prevLocation = "Unknown";
+
+                    db.ClearLocation();
+
+                    var Location = new Location()
+                    {
+                        CurrentLocation = possibleAddresses
+                    };
+                    db.AddLocation(Location);
+                    currLocation = possibleAddresses;
+                    
+                }
+                catch (Exception e)
+                {
+                    Toasts("custom", "Cannot get current location");
+                    currLocation = "Unknown";
+                    return;
+                }
             }
-            catch (Exception e)
+            catch(Exception e)
             {
-                Toasts("custom", e.ToString());
+                Toasts("permission", "Location");
+                return;
             }
-
-
+           
         }
 
-        public void Send(string number, string message) //temporary
+        public async void Send(string emergency)
         {
-
-            // Get the default instance of SmsManager
+            var smsStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Sms);
+            if (smsStatus != PermissionStatus.Granted)
+            {
+                var results = await CrossPermissions.Current.RequestPermissionsAsync(new[] { Permission.Sms });
+                smsStatus = results[Permission.Sms];
+                if (smsStatus != PermissionStatus.Granted)
+                {
+                    DependencyService.Get<IToast>().Toasts("custom", "Permission Denied");
+                    return;
+                }
+            }
             try
             {
-                SmsManager.Default.SendTextMessage(number, null, message, null, null);
+                string _name = "";
+                string _address = "";
+                int _age;
+                string _bloodgroup = "";
+                string _otherinfo = "";
+                string message1 = "Emergency Message:\n\n";
+                string message2 = "Other information:\n\n";
+
+                await Location();
+
+                ProfileDatabase profileDB = new ProfileDatabase(dbPath);
+                var profile = await profileDB.GetProfileAsync();
+                _name = profile.FirstName + " " + ((profile.MiddleName != null) ? profile.MiddleName.ElementAt(0).ToString() + ". " : "") + profile.LastName;
+                _address = profile.HouseNumber + " " + profile.Street + " St. Brgy. " + profile.Barangay + " " + profile.Town + ", " + profile.City;
+                _age = ((DateTime.Now.DayOfYear < profile.Birthdate.DayOfYear) ? DateTime.Now.Year - profile.Birthdate.Year - 1 : DateTime.Now.Year - profile.Birthdate.Year);
+                _bloodgroup = profile.BloodGroup;
+                _otherinfo = (profile.OtherInfo ?? "");
+
+                MessageDatabase messageDB = new MessageDatabase(dbPath);
+                var messageTemp = await messageDB.GetMessageAsync(emergency);
+                message1 += messageTemp.MessageTemplate;
+
+                StringBuilder str1 = new StringBuilder();
+                str1.Append("\nCurrent Location: " + currLocation);
+                str1.Append("\nName: " + _name);
+                message1 = string.Concat(message1, str1.ToString());
+
+                StringBuilder str2 = new StringBuilder();
+                str2.Append("Address: " + _address);
+                str2.Append("\nAge: " + _age);
+                str2.Append("\nBlood Group: " + _bloodgroup);
+                if (_otherinfo != "")
+                    str2.Append("\nOther Information: " + _otherinfo);
+                message2 = string.Concat(message2, str2.ToString());
+
+
+
+                ContactDatabase contactDB = new ContactDatabase(dbPath);
+                var list = await contactDB.GetContactsAsync(emergency);
+                foreach (Contact contact in list)
+                {
+                    SmsManager.Default.SendTextMessage(contact.ContactNumber, null, message1, null, null);
+                    SmsManager.Default.SendTextMessage(contact.ContactNumber, null, message2, null, null);
+                    Toasts("custom", "SMS Sent");
+                }
+             
             }
             catch(Exception e)
             {
                 Toasts("permission", "Send SMS");
-            }
-           
-            // For when the SMS has been sent
-
+            }  
         
         }
 
@@ -85,7 +171,7 @@ namespace Rescue.Droid
         {
             switch (function)
             {
-                case "hasData":
+               case "hasData":
                     if (status == "success")
                     {
                         toast.SetText("Data Available");
@@ -193,7 +279,7 @@ namespace Rescue.Droid
             int randomNumber = random.Next(9999 - 1000) + 1000;
             var localNotification = new LocalNotification
             {
-                Title = "Rescue",
+                Title = "Emergency Triggered",
                 Body = "Sending emergency",
                 Id = 0,
                 NotifyTime = DateTime.Now,

@@ -7,10 +7,14 @@ using Xamarin.Forms;
 using Rescue.Database;
 using Rescue.View;
 using Rescue.Model;
+using SQLite;
+using System.IO;
 namespace Rescue
 {
 	public partial class App : Application
 	{
+        string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Rescue.db3");
+
         public static MasterDetailPage MasterDetail { get; set; }
         public async static Task NavigateMasterDetail(Page page)
         {
@@ -21,26 +25,31 @@ namespace Rescue
 		public App ()
 		{
 			InitializeComponent();
-            //if (!ProfileDatabase.CheckProfile())
-            //{
-            //    MainPage = new NavigationPage(new EditProfileView("create"))
-            //    {
-            //        BarBackgroundColor = Color.FromHex("#34495e")
-            //    };
-            //}
-            //else
-            //{
+            ProfileDatabase db = new ProfileDatabase(dbPath);
+            var _db = db.CheckProfileAsync();
+            if (_db == "No Profile")
+            {
+                MainPage = new NavigationPage(new EditProfileView("create"))
+                {
+                    BarBackgroundColor = Color.FromHex("#2c3e50")
+                };
+                
+            }
+            else
+            {
                 MainPage = new Rescue.View.MainPage();
-            //}
+            }
         }
 
         //public static ProfileDatabase ProfileDatabase
         //{
+
         //    get
         //    {
         //        if (profileDatabase == null)
         //        {
-        //            profileDatabase = new ProfileDatabase();
+              
+        //            profileDatabase = new ProfileDatabase(dbPath);
 
         //        }
         //        return profileDatabase;

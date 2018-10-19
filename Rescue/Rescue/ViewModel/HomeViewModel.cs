@@ -16,6 +16,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using Plugin.LocalNotifications;
+using System.Threading;
 namespace Rescue.ViewModel
 {
     public class HomeViewModel : INotifyPropertyChanged
@@ -24,6 +25,9 @@ namespace Rescue.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         public Action<string> ChangeButton;
         public bool hasContact;
+       
+
+
         public ICommand Edit { protected set; get; }
         public ICommand Done { protected set; get; }
         public ICommand Return { protected set; get; }
@@ -47,6 +51,8 @@ namespace Rescue.ViewModel
             //Return = new Command(OnReturn);
             EmergencyTap= new Command(OnEmergencyTap);
             InitMessage();
+            InitLocation();
+  
 
         }
     
@@ -69,15 +75,26 @@ namespace Rescue.ViewModel
         {
             if (EmergencyMode == "Setup Mode")
             {
-              await App.NavigateMasterDetail(new SetUpView(emergency.ToString()));
+                await App.NavigateMasterDetail(new SetUpView(emergency.ToString()));
                 //await App.NavigateMasterDetail(new SetUpView(emergency.ToString()));
             }
             else
             {
+
+                 CheckEmergency(emergency.ToString());
+                //{
+                //    await InitLocation();
+                //    await GetProfile();
+                //}
                 ///GetModel(emergency);
                 //SendMessage(emergency.ToString());
-               await DependencyService.Get<IGetLocation>().Location();
-               // CrossLocalNotifications.Current.Show("title", "body");
+                
+               // await SetMessage(emergency.ToString());
+                
+                //await SendMessage(emergency.ToString());
+
+
+
 
             }
         }
@@ -94,6 +111,7 @@ namespace Rescue.ViewModel
                     var Message = new Message()
                     {
                         EmergencyName = value,
+                        MessageTemplate = "Help me"
                     };
                     db.AddMessage(Message);
                 }
@@ -102,28 +120,67 @@ namespace Rescue.ViewModel
 
         }
 
-        public async void SendMessage(string emergency)
+        public async void CheckEmergency(string emergency)
         {
-
-            //await DependencyService.Get<IGetLocation>().Location();
-            string defaultMsg = "Help me";
-            MessageDatabase mdb = new MessageDatabase(dbPath);
-            var msg = await mdb.GetMessageAsync(emergency);
-            if (msg.MessageTemplate == null)
-                msg.MessageTemplate = defaultMsg;
-            ContactDatabase cdb = new ContactDatabase(dbPath);
-            var list = await cdb.GetContactsAsync(emergency);
-            if (list.Count() > 0)
+            ContactDatabase db = new ContactDatabase(dbPath);
+            var _db = await db.CountContact(emergency);
+            if (_db > 0)
             {
-                foreach (Contact contact in list)
-                {
-
-                    DependencyService.Get<ISendSMS>().Send(contact.ContactNumber, msg.MessageTemplate);
-                }
+                DependencyService.Get<ISendSMS>().Send(emergency);
             }
             else
                 DependencyService.Get<IToast>().Toasts("hasData", "failed");
+             
         }
+        public async void InitLocation()
+        {
+           await DependencyService.Get<IGetLocation>().Location();
+        }
+
+        public async Task GetProfile()
+        {
+            //DependencyService.Get<IToast>().Toasts("custom", "Getting Profile");
+            //ProfileDatabase profileDB = new ProfileDatabase(dbPath);
+            //var profile = await profileDB.GetProfileAsync();
+            //_name = profile.FirstName + " " + ((profile.MiddleName != null) ? profile.MiddleName.ElementAt(0).ToString() + ". " : "") + profile.LastName;
+            //_address = profile.HouseNumber + " " + profile.Street + " St. Brgy. " + profile.Barangay + " " + profile.Town + ", " + profile.City;
+            //_age = ((DateTime.Now.DayOfYear < profile.Birthdate.DayOfYear) ? DateTime.Now.Year - profile.Birthdate.Year - 1 : DateTime.Now.Year - profile.Birthdate.Year);
+            //_bloodgroup = profile.BloodGroup;
+            //_otherinfo = ((profile.OtherInfo != null) ? profile.OtherInfo : "");
+            //DependencyService.Get<IToast>().Toasts("custom", "Got Profile!");
+        }
+
+        public async Task SetMessage(string emergency)
+        {
+            //DependencyService.Get<IToast>().Toasts("custom", "Setting Message");
+            //string defaultMsg = "Help me\n\n";
+            //MessageDatabase messageDB = new MessageDatabase(dbPath);
+            //var msg = await messageDB.GetMessageAsync(emergency);
+            //if (msg.MessageTemplate == null)
+            //    message = defaultMsg;
+            //else
+            //    message = msg.MessageTemplate + "\n\n";
+            //StringBuilder str = new StringBuilder();
+            //str.Append((currLocation == "Unknown") ? "Previous Location: " + prevLocation + "\nCurrent Location:" + currLocation : "Current Location: " + currLocation);
+            //str.Append("\n\nName: " + _name);
+            //str.Append("\nAddress:" + _address);
+            //str.Append("\nAge: " + _age);
+            //str.Append("\nBlood Group: " + _bloodgroup);
+            //str.Append((_otherinfo != "") ? "\nOther Information: " + _otherinfo : "");
+            //message = string.Concat(message, str.ToString());
+            //DependencyService.Get<IToast>().Toasts("custom", message);
+
+        }
+
+        public async void SendMessage(string emergency)
+        {
+           
+               
+
+          
+
+        }
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

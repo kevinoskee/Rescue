@@ -5,11 +5,12 @@ using Rescue.ViewModel;
 using SQLite;
 namespace Rescue.Model
 {
-    public class LocationModel
+    [Table("Location")]
+    public class Location
     {
-        public string Longitude { get; set; }
-        public string Latitude { get; set; }
-        public string Location { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public int LocationId { get; set; }
+        public string CurrentLocation { get; set; }
     }
     [Table("Contact")]
     public class Contact
@@ -27,7 +28,8 @@ namespace Rescue.Model
         public string EmergencyName { get; set; }
         public string MessageTemplate { get; set; }
     }
-   public class Profile
+    [Table("Profile")]
+    public class Profile
     {
         [PrimaryKey,AutoIncrement]
         public int ProfileId { get; set; }
@@ -41,7 +43,10 @@ namespace Rescue.Model
         public string City { get; set; }
         public DateTime Birthdate { get; set; }
         public string BloodGroup { get; set; }
+        //public string Medications { get; set; }
+        //public string Allergies { get; set; }
         public string OtherInfo { get; set; }
+
     }
 
 }

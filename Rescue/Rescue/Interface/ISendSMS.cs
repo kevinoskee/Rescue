@@ -6,6 +6,6 @@ namespace Rescue
 {
     public interface ISendSMS
     {
-        void Send(string number,string message);
+        void Send(string emergency);
     }
 }

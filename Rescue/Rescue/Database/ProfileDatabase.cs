@@ -44,5 +44,15 @@ namespace Rescue.Database
             return "success";
         }
 
+        //CHECK
+        public string CheckProfileAsync()
+        {
+            var entryCount = conn.Table<Profile>().CountAsync();
+            if (entryCount != null)
+                return "Has Profile";
+            else
+                return "No Profile";
+        }
+
     }
 }

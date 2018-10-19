@@ -60,7 +60,7 @@ namespace Rescue.Droid
                 if (count == 3)
                 {
                     DependencyService.Get<IGetLocation>().Test();
-                    SendMessage();
+                    DependencyService.Get<ISendSMS>().Send("Personal");
                     count = 0;
                 }
 
@@ -78,7 +78,7 @@ namespace Rescue.Droid
                 if(count == 3)
                 {
                     DependencyService.Get<IGetLocation>().Test();
-                    SendMessage();
+                    DependencyService.Get<ISendSMS>().Send("Personal");
                     count = 0;
                 }
           
@@ -86,24 +86,24 @@ namespace Rescue.Droid
         }
         async void SendMessage()
         {
-            string defaultMsg = "Help me";
-            string emergency = "Personal";
-            MessageDatabase mdb = new MessageDatabase(dbPath);
-            var msg = await mdb.GetMessageAsync(emergency);
-            if (msg.MessageTemplate == null)
-                msg.MessageTemplate = defaultMsg;
-            ContactDatabase cdb = new ContactDatabase(dbPath);
-            var list = await cdb.GetContactsAsync(emergency);
-            if (list.Count() > 0)
-            {
-                foreach (Contact contact in list)
-                {
+            //string defaultMsg = "Help me";
+            //string emergency = "Personal";
+            //MessageDatabase mdb = new MessageDatabase(dbPath);
+            //var msg = await mdb.GetMessageAsync(emergency);
+            //if (msg.MessageTemplate == null)
+            //    msg.MessageTemplate = defaultMsg;
+            //ContactDatabase cdb = new ContactDatabase(dbPath);
+            //var list = await cdb.GetContactsAsync(emergency);
+            //if (list.Count() > 0)
+            //{
+            //    foreach (Contact contact in list)
+            //    {
 
-                    DependencyService.Get<ISendSMS>().Send(contact.ContactNumber, msg.MessageTemplate);
-                }
-            }
-            else
-                DependencyService.Get<IToast>().Toasts("hasData", "failed");
+            //        DependencyService.Get<ISendSMS>().Send(contact.ContactNumber, msg.MessageTemplate);
+            //    }
+            //}
+            //else
+            //    DependencyService.Get<IToast>().Toasts("hasData", "failed");
         }
      
     }

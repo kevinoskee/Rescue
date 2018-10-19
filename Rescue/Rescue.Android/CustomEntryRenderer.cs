@@ -17,7 +17,6 @@ using Android.Util;
 using Android.Graphics.Drawables;
 using Rescue.Extras;
 
-
 [assembly: ExportRenderer(typeof(CustomEntry), typeof(CustomEntryRenderer))]
 namespace Rescue.Droid
 {
